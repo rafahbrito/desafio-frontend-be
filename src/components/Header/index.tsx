@@ -1,3 +1,12 @@
+import { HeaderContainer, HeaderContent, HeaderLogo } from './styles'
+import be from '../../assets/be.svg'
+
 export function Header() {
-  return <h1>Header</h1>
+  return (
+    <HeaderContainer>
+      <HeaderContent>
+        <HeaderLogo src={be} />
+      </HeaderContent>
+    </HeaderContainer>
+  )
 }
