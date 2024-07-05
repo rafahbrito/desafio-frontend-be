@@ -15,5 +15,6 @@ export const HeaderContent = styled.div`
 `
 
 export const HeaderLogo = styled.img`
-  margin: 1.2rem 0 1.2rem 3.2rem;
+  margin: ${({ theme }) =>
+    `${theme.spacings['regular-12']} 0 ${theme.spacings['regular-12']} ${theme.spacings['medium-32']}`};
 `

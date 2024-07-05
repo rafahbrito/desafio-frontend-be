@@ -12,6 +12,7 @@ export default {
   spacings: {
     'litle-04': '0.4rem',
     'litle-08': '0.8rem',
+    'regular-12': '1.2rem',
     'regular-16': '1.6rem',
     'regular-20': '2rem',
     'regular-28': '2.8rem',
