@@ -1,99 +1,94 @@
+import { useEffect, useState } from 'react'
 import { SectionPage } from '../../components/SectionPage'
 import { Table } from '../../components/Table'
+import { useSearch } from '../../contexts/SearchContext'
 
-const employees = [
-  {
-    id: 1,
-    name: 'João',
-    job: 'Back-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg',
-  },
-  {
-    id: 2,
-    name: 'Roberto',
-    job: 'Front-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png',
-  },
-  {
-    id: 3,
-    name: 'Maria',
-    job: 'Front-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png',
-  },
-  {
-    id: 4,
-    name: 'Cleber',
-    job: 'Back-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg',
-  },
-  {
-    id: 5,
-    name: 'Giovana',
-    job: 'Designer',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png',
-  },
-  {
-    id: 6,
-    name: 'Mario',
-    job: 'Front-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png',
-  },
-  {
-    id: 7,
-    name: 'Gabriel',
-    job: 'Back-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg',
-  },
-  {
-    id: 8,
-    name: 'Carla',
-    job: 'Back-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png',
-  },
-  {
-    id: 10,
-    name: 'Fernanda',
-    job: 'Front-end',
-    admission_date: '00/00/0000',
-    phone: '+55 (55) 55555-5555',
-    image:
-      'https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png',
-  },
-]
+interface Employee {
+  id: number
+  name: string
+  job: string
+  admission_date: string
+  phone: string
+  image: string
+}
 
 export function Employees() {
+  const [employees, setEmployees] = useState<Employee[]>([])
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | undefined>(undefined)
+  const { searchTerm } = useSearch()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/employees')
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        const data: Employee[] = await response.json()
+        const formattedEmployees = data.map((employee) => ({
+          ...employee,
+          phone: formatPhoneNumber(employee.phone),
+          admission_date: new Date(employee.admission_date).toLocaleDateString(
+            'pt-BR',
+          ),
+        }))
+
+        // Simula delay de 2s
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
+        setEmployees(formattedEmployees)
+        setFilteredEmployees(formattedEmployees)
+        setIsLoading(false)
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message)
+        } else {
+          setError('An unknown error occurred')
+        }
+        setEmployees([])
+        setFilteredEmployees([])
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    // Atualiza a lista filtrada sempre que o searchTerm muda
+    const normalizedSearch = searchTerm.toLowerCase().trim()
+    const filtered = employees.filter((employee) => {
+      const { name, job, phone } = employee
+      return (
+        name.toLowerCase().includes(normalizedSearch) ||
+        job.toLowerCase().includes(normalizedSearch) ||
+        phone.toLowerCase().includes(normalizedSearch)
+      )
+    })
+    setFilteredEmployees(filtered)
+  }, [searchTerm, employees])
+
+  const formatPhoneNumber = (phone: string): string => {
+    const cleaned = ('' + phone).replace(/\D/g, '')
+    const match = cleaned.match(/^(?:\+|)(\d{2})(\d{2})(\d{5})(\d{4})$/)
+    if (match) {
+      return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}`
+    }
+    return phone
+  }
+
   return (
     <SectionPage title="Funcionários" hasSearch={true}>
       <Table
-        dataTable={employees}
+        dataTable={filteredEmployees}
         gridTemplateColumns="1fr 2.5fr 1.75fr 2.5fr 2.5fr"
         thead={['Foto', 'Nome', 'Cargo', 'Data de admissão', 'Telefone']}
         keysToShow={['image', 'name', 'job', 'admission_date', 'phone']}
         keysAsImages={['image']}
+        loading={isLoading}
+        labelEmptyTable={error}
       />
     </SectionPage>
   )

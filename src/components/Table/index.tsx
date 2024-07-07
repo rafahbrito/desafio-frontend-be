@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { Container, ContainerTable, TableStyle } from './styles'
+import SkeletonTable from './SkeletonTable'
 
 interface TableProps<T> {
   thead?: string[]
@@ -16,7 +17,7 @@ export function Table<T>({
   dataTable,
   keysToShow,
   keysAsImages,
-  loading = false,
+  loading = true,
   labelEmptyTable = 'Nenhuma informação localizada com os parâmetros informados.',
   gridTemplateColumns,
 }: TableProps<T>) {
@@ -87,12 +88,12 @@ export function Table<T>({
             </TableStyle>
           ) : (
             <div className="emptyTable">
-              <h3>Registro não encontrado 😕</h3>
+              <h3>Registros não encontrados 😕</h3>
               <p>{labelEmptyTable}</p>
             </div>
           )
         ) : (
-          <div>Carregando...</div>
+          <SkeletonTable columns={rowsTable} />
         )}
       </ContainerTable>
     </Container>

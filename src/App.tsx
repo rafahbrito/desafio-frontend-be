@@ -3,13 +3,16 @@ import { BrowserRouter } from 'react-router-dom'
 import theme from './styles/themes/theme'
 import { GlobalStyle } from './styles/globalStyle'
 import { Router } from './routes/Router'
+import { SearchProvider } from './contexts/SearchContext'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <GlobalStyle />
-        <Router />
+        <SearchProvider>
+          <Router />
+        </SearchProvider>
       </BrowserRouter>
     </ThemeProvider>
   )

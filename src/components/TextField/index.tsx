@@ -1,31 +1,25 @@
-import { useState, InputHTMLAttributes } from 'react'
-
+import React from 'react'
+import { useSearch } from '../../contexts/SearchContext'
 import * as S from './styles'
 
 export type TextFieldProps = {
-  onInputChange?: (value: string) => void
   label?: string
-  initialValue?: string
   icon?: string
   disabled?: boolean
-} & InputHTMLAttributes<HTMLInputElement>
+} & React.InputHTMLAttributes<HTMLInputElement>
 
 export function TextField({
   icon,
   label,
   name,
-  initialValue = '',
   disabled = false,
-  onInputChange,
   ...props
 }: TextFieldProps) {
-  const [value, setValue] = useState(initialValue)
+  const { searchTerm, setSearchTerm } = useSearch()
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value
-    setValue(newValue)
-
-    !!onInputChange && onInputChange(newValue)
+    setSearchTerm(newValue)
   }
 
   return (
@@ -35,7 +29,7 @@ export function TextField({
         <S.Input
           type="text"
           onChange={onChange}
-          value={value}
+          value={searchTerm}
           disabled={disabled}
           name={name}
           {...(label ? { id: name } : {})}

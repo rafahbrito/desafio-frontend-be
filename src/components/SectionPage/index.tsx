@@ -1,5 +1,6 @@
-import { TextField } from '../TextField'
+import React from 'react'
 import { SectionContainer, SectionHeader, SectionTitle } from './styles'
+import { TextField } from '../TextField'
 import searchicon from '../../assets/searchicon.svg'
 
 interface SectionPageProps {
@@ -13,7 +14,9 @@ export function SectionPage({ title, hasSearch, children }: SectionPageProps) {
     <SectionContainer>
       <SectionHeader>
         <SectionTitle>{title}</SectionTitle>
-        {hasSearch && <TextField placeholder="Pesquisar" icon={searchicon} />}
+        {hasSearch && (
+          <TextField placeholder="Pesquisar" icon={searchicon} name="search" />
+        )}
       </SectionHeader>
       {children}
     </SectionContainer>
