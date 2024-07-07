@@ -16,7 +16,3 @@ export const SectionTitle = styled.h2`
   font-size: ${({ theme }) => theme.font.sizes['regular-24']};
   color: ${({ theme }) => theme.colors.black};
 `
-
-export const SearchInput = styled.input`
-  padding: ${({ theme }) => theme.spacings['litle-08']};
-`

@@ -1,9 +1,6 @@
-import {
-  SectionContainer,
-  SectionHeader,
-  SectionTitle,
-  SearchInput,
-} from './styles'
+import { TextField } from '../TextField'
+import { SectionContainer, SectionHeader, SectionTitle } from './styles'
+import searchicon from '../../assets/searchicon.svg'
 
 interface SectionPageProps {
   title?: string
@@ -16,7 +13,7 @@ export function SectionPage({ title, hasSearch, children }: SectionPageProps) {
     <SectionContainer>
       <SectionHeader>
         <SectionTitle>{title}</SectionTitle>
-        {hasSearch && <SearchInput type="search" placeholder="Search..." />}
+        {hasSearch && <TextField placeholder="Pesquisar" icon={searchicon} />}
       </SectionHeader>
       {children}
     </SectionContainer>
