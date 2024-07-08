@@ -13,9 +13,18 @@ export const HeaderContent = styled.div`
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
+
+  @media (max-width: 480px) {
+    max-width: 375px;
+  }
 `
 
 export const HeaderLogo = styled.img`
   margin: ${({ theme }) =>
     `${theme.spacings['regular-12']} 0 ${theme.spacings['regular-12']} ${theme.spacings['medium-32']}`};
+
+  @media (max-width: 480px) {
+    margin: ${({ theme }) =>
+      `${theme.spacings['regular-12']} 0 ${theme.spacings['regular-12']} ${theme.spacings['regular-20']}`};
+  }
 `

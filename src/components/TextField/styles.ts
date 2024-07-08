@@ -23,6 +23,10 @@ export const Input = styled.input`
     outline: none;
     width: 23rem;
   `}
+
+  @media (max-width: 480px) {
+    width: 27.5rem;
+  }
 `
 
 export const Label = styled.label`
