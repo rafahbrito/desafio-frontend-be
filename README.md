@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# Boas-vindas ao repositório do projeto Desafio Técnico Front-end Be!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Orientações
+<details>
+  <summary><strong>Pré-Requisitos</strong></summary><br />
 
-Currently, two official plugins are available:
+  1. Ferramentas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  - Tenha instaladas em sua máquina as ferramentas [Git](https://git-scm.com/), [Node.js](https://nodejs.org/en/) e [Yarn](https://yarnpkg.com/) (ou outro gerenciador de pacotes de sua preferência) para poder trabalhar no projeto.
 
-## Expanding the ESLint configuration
+  2. Acesso aos dados da API simulada
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+  - Para ter acesso aos dados que alimentarão o projeto é importante ter [json-server](https://github.com/typicode/json-server);
+  
+</details>
 
-- Configure the top-level `parserOptions` property like this:
+<details>
+  <summary><strong>Como rodar o Projeto</strong></summary><br />
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+  1. Clone o repositório
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+  - Use o comando: `git clone git@github.com:rafahbrito/desafio-frontend-be.git`.
+  - Entre na pasta do repositório que você acabou de clonar:
+    - `cd desafio-frontend-be`
+
+  2. Instale as dependências
+
+  - `npm install`.
+  
+  3. Rode o comando a API simulada
+
+  - Rode o comando:
+    - `json-server --watch db.json`
+  - Abra um novo terminal e rode o comando:
+    - `npm run dev`
+  - Acesse a URL informada onde o projeto esta rodando localmente.
+</details>
